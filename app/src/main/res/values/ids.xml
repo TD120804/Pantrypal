@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="text_dashboard_title" type="id"/>
+    <item name="text_total_items" type="id"/>
+    <item name="text_expiring_items" type="id"/>
+    <item name="text_risk_score" type="id"/>
+    <item name="pantry_health_bar" type="id"/>
+    <item name="text_health_percent" type="id"/>
+    <item name="recycler_view_groceries" type="id"/>
+    <item name="fab_add_grocery" type="id"/>
+
+</resources>

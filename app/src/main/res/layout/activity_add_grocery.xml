@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5EEE9">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- TITLE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Item"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="#3A2A0A"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add a new grocery item to your pantry"
+                android:textSize="14sp"
+                android:textColor="#6B5B3E"
+                android:layout_marginBottom="18dp"/>
+
+            <!-- CARD -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="10dp"
+                app:strokeWidth="2dp"
+                app:strokeColor="#D6B25E"
+                android:backgroundTint="#F8EFEA">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- NAME -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Item Name"/>
+
+                    <EditText
+                        android:id="@+id/editTextName"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="Milk, Rice..."
+                        android:background="@drawable/bg_input_soft"/>
+
+                    <!-- QUANTITY -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quantity"
+                        android:layout_marginTop="12dp"/>
+
+                    <EditText
+                        android:id="@+id/editTextQuantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="Enter quantity"
+                        android:inputType="number"
+                        android:background="@drawable/bg_input_soft"/>
+
+                    <!-- CATEGORY -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Category"
+                        android:layout_marginTop="12dp"/>
+
+                    <EditText
+                        android:id="@+id/editTextCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="Category"
+                        android:background="@drawable/bg_input_soft"/>
+
+                    <!-- EXPIRY -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expiry Date"
+                        android:layout_marginTop="12dp"/>
+
+                    <EditText
+                        android:id="@+id/editTextExpiry"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="Select date"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:background="@drawable/bg_input_soft"/>
+
+                    <!-- NOTES -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Notes"
+                        android:layout_marginTop="12dp"/>
+
+                    <EditText
+                        android:id="@+id/editTextNotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="Optional"
+                        android:background="@drawable/bg_input_soft"/>
+
+                    <!-- SAVE BUTTON -->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/buttonSave"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Add Item"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_capsule_gold"
+                        android:backgroundTint="@null"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
