@@ -10,4 +10,7 @@
     <color name="normalColor">#1C1C26</color>      <!-- default dark -->
     <color name="expiringColor">#FFBB33</color>   <!-- yellow-ish warning -->
     <color name="expiredColor">#FF4444</color>    <!-- red alert -->
+    <color name="gold_title">#E8D18A</color>
+    <color name="gold_subtle">#C2A24F</color>
+    <color name="bronze_dark">#3A2A0A</color>
 </resources>

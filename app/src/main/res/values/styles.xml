@@ -1,0 +1,19 @@
+<resources>
+
+    <!-- FORM LABEL -->
+    <style name="FormLabel">
+        <item name="android:textColor">@color/gold_subtle</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginTop">12dp</item>
+    </style>
+
+    <!-- FORM INPUT -->
+    <style name="FormInput">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@drawable/bg_input</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:textColor">@color/gold_title</item>
+    </style>
+
+</resources>

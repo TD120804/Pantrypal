@@ -275,7 +275,7 @@
             </LinearLayout>
 
             <!-- ================= QUICK ADD ================= -->
-            <!--<com.google.android.material.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginTop="18dp"
@@ -300,13 +300,13 @@
                         android:gravity="center"
                         android:text="+ Quick Add Item"
                         android:textColor="#3A2A0A"
-                        android:background="@drawable/bg_capsule_soft"
+                        android:background="@drawable/bg_toggle_selected_pearl"
                         android:elevation="4dp"
                         android:clickable="true"
                         android:focusable="true"/>
 
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>!-->
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- ================= ANALYTICS ================= -->
             <com.google.android.material.card.MaterialCardView

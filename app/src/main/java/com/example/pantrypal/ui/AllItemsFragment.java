@@ -85,12 +85,12 @@ public class AllItemsFragment extends Fragment {
         }
 
         // QUICK ADD
-        /*TextView addBtn = view.findViewById(R.id.btn_add_item);
+        TextView addBtn = view.findViewById(R.id.btn_add_item);
         if (addBtn != null) {
             addBtn.setOnClickListener(v ->
                     startActivity(new Intent(requireContext(), AddGroceryActivity.class))
             );
-        }*/
+        }
 
         viewModel = new ViewModelProvider(requireActivity()).get(GroceryViewModel.class);
         viewModel.getAllItems().observe(getViewLifecycleOwner(), this::updateUI);

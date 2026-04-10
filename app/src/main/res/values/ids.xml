@@ -9,5 +9,20 @@
     <item name="text_health_percent" type="id"/>
     <item name="recycler_view_groceries" type="id"/>
     <item name="fab_add_grocery" type="id"/>
+    <item name="textQuantity" type="id"/>
+    <item name="btnBranded" type="id"/>
+    <item name="btnLoose" type="id"/>
+    <item name="editTextName" type="id"/>
+    <item name="btnMinus" type="id"/>
+    <item name="btnPlus" type="id"/>
+    <item name="spinnerUnit" type="id"/>
+    <item name="spinnerCategory" type="id"/>
+    <item name="layoutBarcode" type="id"/>
+    <item name="editTextBarcode" type="id"/>
+    <item name="buttonScan" type="id"/>
+    <item name="editTextExpiry" type="id"/>
+    <item name="editTextNotes" type="id"/>
+    <item name="buttonSave" type="id"/>
+    <item name="buttonCancel" type="id"/>
 
 </resources>
