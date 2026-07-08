@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/expiring_soon_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0E0E12"
+    tools:context=".ui.ExpiringSoonFragment">
+
+    <!-- Recycler -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_expiring"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:visibility="gone"/>
+
+    <!-- Empty State -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="24dp">
+
+        <ImageView
+            android:id="@+id/image_empty_expiring"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:src="@drawable/ic_vegetable"
+            android:visibility="visible"
+            app:tint="#8C7AAE" />
+
+        <TextView
+            android:id="@+id/text_empty_expiring"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No items expiring soon 🎯"
+            android:textColor="#BBB5D6"
+            android:textSize="18sp"
+            android:paddingTop="18dp"
+            android:visibility="visible"/>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

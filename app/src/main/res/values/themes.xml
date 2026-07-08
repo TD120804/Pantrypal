@@ -1,0 +1,28 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme (FORCED LIGHT MODE) -->
+    <style name="Theme.PantryPal" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <!-- Brand Colors -->
+        <item name="colorPrimary">#D6B25E</item>
+        <item name="colorPrimaryVariant">#C2A24F</item>
+        <item name="colorOnPrimary">#3A2A0A</item>
+
+        <item name="colorSecondary">#E8D18A</item>
+        <item name="colorOnSecondary">#3A2A0A</item>
+
+        <!-- Status Bar -->
+        <item name="android:statusBarColor">#F5EEE9</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+    </style>
+
+    <style name="Theme.PantryPal.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.PantryPal.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.PantryPal.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>
