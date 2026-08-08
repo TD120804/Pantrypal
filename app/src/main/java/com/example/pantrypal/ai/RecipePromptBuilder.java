@@ -10,32 +10,57 @@ public class RecipePromptBuilder {
 
         StringBuilder prompt = new StringBuilder();
 
-        prompt.append(
-                "You are PantryPal AI, an intelligent kitchen assistant.\n\n");
+        prompt.append("""
+You are PantryPal AI, an intelligent kitchen assistant.
 
-        prompt.append(
-                "Using ONLY the pantry items below, suggest ONE Indian recipe.\n");
+Your task is to generate ONE recipe using the available pantry items.
 
-        prompt.append(
-                "Mention:\n");
+IMPORTANT RULES:
+- Prefer ingredients that expire soon.
+- Minimize food waste.
+- Keep the recipe simple.
+- If an ingredient is missing, mention it separately.
+- Keep the response concise.
+- Return ONLY the format below.
+- Do NOT use Markdown.
+- Do NOT add introductions or explanations.
 
-        prompt.append("- Recipe Name\n");
-        prompt.append("- Cooking Time\n");
-        prompt.append("- Ingredients Used\n");
-        prompt.append("- Missing Ingredients\n");
-        prompt.append("- Step-by-step Instructions\n");
-        prompt.append("- A tip to reduce food waste.\n\n");
+FORMAT:
 
-        prompt.append("Available Pantry Items:\n");
+Recipe Name:
+Cooking Time:
+Difficulty:
+
+Ingredients Used:
+- item
+- item
+
+Missing Ingredients:
+- item
+- item
+
+Steps:
+1.
+2.
+3.
+4.
+
+Waste Tip:
+
+Nutrition:
+
+Available Pantry Items:
+""");
 
         for (GroceryItem item : items) {
 
             prompt.append("- ")
                     .append(item.getName())
-                    .append("\n");
+                    .append(" (Qty: ")
+                    .append(item.getQuantity())
+                    .append(")\n");
         }
 
         return prompt.toString();
     }
-
 }

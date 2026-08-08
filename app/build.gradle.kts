@@ -1,7 +1,13 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
 }
-val geminiApiKey = project.findProperty("GEMINI_API_KEY") as String? ?: ""
+val localProperties = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
+}
+
+val geminiApiKey = localProperties.getProperty("GEMINI_API_KEY") ?: ""
 
 android {
     namespace = "com.example.pantrypal"
@@ -55,6 +61,7 @@ dependencies {
 
     // 🔥 SPEEDOMETER GAUGE (NEW)
     implementation("com.github.anastr:speedviewlib:1.6.0")
+    implementation("com.mikhaellopez:circularprogressbar:3.1.0")
 
     // Networking
     implementation("com.squareup.okhttp3:okhttp:4.12.0")

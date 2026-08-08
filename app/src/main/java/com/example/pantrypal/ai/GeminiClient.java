@@ -1,5 +1,7 @@
 package com.example.pantrypal.ai;
 
+import android.util.Log;
+
 import com.example.pantrypal.BuildConfig;
 
 import org.json.JSONArray;
@@ -18,8 +20,7 @@ import okhttp3.Response;
 public class GeminiClient {
 
     private static final String URL =
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" +
-                    BuildConfig.GEMINI_API_KEY;
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent";
 
     private final OkHttpClient client = new OkHttpClient();
 
@@ -53,13 +54,16 @@ public class GeminiClient {
 
             Request request = new Request.Builder()
                     .url(URL)
+                    .addHeader("x-goog-api-key", BuildConfig.GEMINI_API_KEY)
+                    .addHeader("Content-Type", "application/json")
                     .post(requestBody)
                     .build();
-
             client.newCall(request).enqueue(new Callback() {
 
                 @Override
                 public void onFailure(Call call, IOException e) {
+
+                    Log.e("AI_DEBUG", "Network Failure", e);
 
                     callback.onError(e.getMessage());
 
@@ -67,12 +71,22 @@ public class GeminiClient {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
+                    android.util.Log.d("AI_DEBUG", "HTTP Code = " + response.code());
 
                     if (!response.isSuccessful()) {
 
-                        callback.onError(response.message());
+                        String errorBody = response.body() != null
+                                ? response.body().string()
+                                : "No response body";
+
+                        android.util.Log.e("AI_DEBUG", "HTTP " + response.code());
+                        android.util.Log.e("AI_DEBUG", errorBody);
+
+                        callback.onError(errorBody);
+
                         return;
                     }
+
                     String json = response.body().string();
                     callback.onSuccess(extractText(json));
                 }

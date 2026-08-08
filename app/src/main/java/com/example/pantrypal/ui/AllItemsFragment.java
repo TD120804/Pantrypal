@@ -1,17 +1,12 @@
 package com.example.pantrypal.ui;
 
-import com.github.mikephil.charting.charts.*;
-import com.github.mikephil.charting.data.*;
-
-import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.ImageView;
-import android.graphics.Typeface;
 
-import androidx.annotation.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -19,265 +14,138 @@ import com.example.pantrypal.R;
 import com.example.pantrypal.models.GroceryItem;
 import com.example.pantrypal.utils.RiskCalculator;
 import com.example.pantrypal.viewmodels.GroceryViewModel;
-import com.google.android.material.button.MaterialButton;
-import com.example.pantrypal.ai.GeminiClient;
-import com.example.pantrypal.ai.AIRequestBuilder;
+import android.content.Intent;
 
-import java.util.*;
+import com.google.android.material.card.MaterialCardView;
+import com.example.pantrypal.scanner.BarcodeScannerActivity;
+import com.example.pantrypal.ai.RecipeRepository;
+import com.example.pantrypal.ai.models.RecipeResponse;
 
-import android.text.*;
-import android.text.style.*;
+import java.util.List;
 
 public class AllItemsFragment extends Fragment {
 
     private GroceryViewModel viewModel;
 
-    private TextView totalItemsText, expiringItemsText, riskScoreText;
-    private MaterialButton aiRecipeButton;
-    private List<GroceryItem> pantryItems = new ArrayList<>();
-    private CustomGaugeView customGauge;
-
-    private PieChart categoryChart;
-    private BarChart barChartExpiry;
-    private LineChart lineChartTrend;
-
-    private Map<String, Integer> categoryLegendMap = new HashMap<>();
+    private TextView totalItemsText;
+    private TextView healthScore;
+    private TextView healthStatus;
+    private TextView recipeName;
+    private TextView cookTime;
+    private TextView difficulty;
+    private TextView servings;
+    private final RecipeRepository recipeRepository = new RecipeRepository();
+    private MaterialCardView cardAdd;
+    private MaterialCardView cardScan;
+    private MaterialCardView cardGrocery;
+    private MaterialCardView cardRecipe;
 
     public AllItemsFragment() {
-        super(R.layout.fragment_all_items);
+        super(R.layout.fragment_all_items_ver2);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         totalItemsText = view.findViewById(R.id.text_total_items);
-        expiringItemsText = view.findViewById(R.id.text_expiring_items);
-        riskScoreText = view.findViewById(R.id.text_risk_score);
+        healthScore = view.findViewById(R.id.text_health_score);
+        healthStatus = view.findViewById(R.id.text_health_status);
 
-        customGauge = view.findViewById(R.id.customGauge);
+        recipeName = view.findViewById(R.id.textRecipeName);
+        cookTime = view.findViewById(R.id.textCookTime);
+        difficulty = view.findViewById(R.id.textDifficulty);
+        servings = view.findViewById(R.id.textServings);
 
-        categoryChart = view.findViewById(R.id.categoryChart);
-        barChartExpiry = view.findViewById(R.id.barChartExpiry);
-        lineChartTrend = view.findViewById(R.id.lineChartTrend);
-        aiRecipeButton = view.findViewById(R.id.btn_ai_recipe);
+        cardAdd = view.findViewById(R.id.cardAdd);
+        cardScan = view.findViewById(R.id.cardScan);
+        cardGrocery = view.findViewById(R.id.cardGrocery);
+        cardRecipe = view.findViewById(R.id.cardRecipes);
 
-        // INFO BUTTONS
-        ImageView wasteInfoBtn = view.findViewById(R.id.btnWasteInfo);
-        ImageView categoryInfoBtn = view.findViewById(R.id.btnCategoryInfo);
+        cardAdd.setOnClickListener(v ->
+                startActivity(new Intent(requireContext(), AddGroceryActivity.class)));
 
-        if (wasteInfoBtn != null) {
-            wasteInfoBtn.setOnClickListener(v -> {
-                SpannableStringBuilder builder = new SpannableStringBuilder();
+        cardScan.setOnClickListener(v ->
+                startActivity(new Intent(requireContext(), BarcodeScannerActivity.class)));
 
-                String main = "Risk = 0.6E + 0.3S + 0.1U\n\n";
-                SpannableString mainSpan = new SpannableString(main);
-                mainSpan.setSpan(new StyleSpan(Typeface.BOLD), 0, main.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        cardRecipe.setOnClickListener(v -> {
+            // TODO: Open AI Recipes
+        });
 
-                builder.append(mainSpan);
-                builder.append("E : Expiry (daysLeft)\n");
-                builder.append("S : (qty / (daysLeft + 1)) × 20\n");
-                builder.append("U : Urgency");
+        cardGrocery.setOnClickListener(v -> {
+            // TODO: Open Grocery List
+        });
 
-                new AlertDialog.Builder(requireContext())
-                        .setTitle("Waste Risk")
-                        .setMessage(builder)
-                        .setPositiveButton("OK", null)
-                        .show();
-            });
-        }
-
-        if (categoryInfoBtn != null) {
-            categoryInfoBtn.setOnClickListener(v -> showCategoryInfo());
-        }
-
-        // QUICK ADD
-        TextView addBtn = view.findViewById(R.id.btn_add_item);
-        if (addBtn != null) {
-            addBtn.setOnClickListener(v ->
-                    startActivity(new Intent(requireContext(), AddGroceryActivity.class))
-            );
-        }
 
         viewModel = new ViewModelProvider(requireActivity()).get(GroceryViewModel.class);
-        viewModel.getAllItems().observe(getViewLifecycleOwner(), this::updateUI);
 
-        aiRecipeButton.setOnClickListener(v -> {
+        viewModel.getAllItems().observe(getViewLifecycleOwner(), this::updateDashboard);
+    }
 
-            if (pantryItems.isEmpty()) {
+    private void updateDashboard(List<GroceryItem> items) {
 
-                new AlertDialog.Builder(requireContext())
-                        .setTitle("🤖 PantryPal AI")
-                        .setMessage("Your pantry is empty.\n\nAdd some groceries first.")
-                        .setPositiveButton("OK", null)
-                        .show();
+        if (items == null) return;
 
-                return;
+        totalItemsText.setText(String.valueOf(items.size()));
+
+        int score = 100;
+
+        for (GroceryItem item : items) {
+
+            int days = RiskCalculator.getDaysLeft(item.getExpiryDate());
+
+            if (days < 0)
+                score -= 15;
+            else if (days <= 3)
+                score -= 5;
+        }
+
+        score = Math.max(0, score);
+
+        healthScore.setText(score + "/100");
+
+        if (score >= 80)
+            healthStatus.setText("Excellent Pantry 🌿");
+        else if (score >= 60)
+            healthStatus.setText("Good Pantry 😊");
+        else if (score >= 40)
+            healthStatus.setText("Needs Attention ⚠");
+        else
+            healthStatus.setText("Poor Pantry 🚨");
+
+        Log.d("AI_DEBUG", "Calling RecipeRepository");
+        recipeRepository.generateRecipe(items, new RecipeRepository.Callback() {
+
+            @Override
+            public void onSuccess(RecipeResponse recipe) {
+
+                requireActivity().runOnUiThread(() -> {
+
+                    recipeName.setText(recipe.getRecipeName());
+
+                    cookTime.setText("🕒 " + recipe.getCookTime());
+                    difficulty.setText("😊 " + recipe.getDifficulty());
+                    servings.setText("👥 2");
+
+                });
+
             }
 
-            aiRecipeButton.setEnabled(false);
-            aiRecipeButton.setText("Generating...");
+            @Override
+            public void onError(String error) {
 
-            String prompt = AIRequestBuilder.buildRecipePrompt(pantryItems);
+                requireActivity().runOnUiThread(() -> {
 
-            GeminiClient client = new GeminiClient();
+                    recipeName.setText("Unable to generate recipe");
 
-            client.generateRecipe(prompt, new GeminiClient.GeminiCallback() {
+                    cookTime.setText("🕒 --");
+                    difficulty.setText("⚠ Error");
+                    servings.setText("👥 --");
 
-                @Override
-                public void onSuccess(String response) {
+                });
 
-                    requireActivity().runOnUiThread(() -> {
-
-                        aiRecipeButton.setEnabled(true);
-                        aiRecipeButton.setText("🍳 Cook With My Pantry");
-
-                        new AlertDialog.Builder(requireContext())
-                                .setTitle("🍳 PantryPal AI Chef")
-                                .setMessage(response)
-                                .setPositiveButton("Awesome!", null)
-                                .show();
-
-                    });
-
-                }
-
-                @Override
-                public void onError(String error) {
-
-                    requireActivity().runOnUiThread(() -> {
-
-                        aiRecipeButton.setEnabled(true);
-                        aiRecipeButton.setText("🍳 Cook With My Pantry");
-
-                        new AlertDialog.Builder(requireContext())
-                                .setTitle("AI Error")
-                                .setMessage(error)
-                                .setPositiveButton("OK", null)
-                                .show();
-
-                    });
-
-                }
-
-            });
+            }
 
         });
-    }
-
-    private void updateUI(List<GroceryItem> list) {
-
-        if (list == null) return;
-
-        pantryItems = list;
-
-        int total = list.size();
-        int expiring = 0;
-        int totalRisk = 0;
-
-        List<BarEntry> barEntries = new ArrayList<>();
-        List<Entry> lineEntries = new ArrayList<>();
-
-        int index = 0;
-
-        for (GroceryItem item : list) {
-
-            int risk = RiskCalculator.calculateRisk(item.getExpiryDate(), item.getQuantity());
-            totalRisk += risk;
-
-            if (risk >= 50) expiring++;
-
-            barEntries.add(new BarEntry(index, risk));
-            lineEntries.add(new Entry(index, item.getQuantity()));
-
-            index++;
-        }
-
-        int avg = total == 0 ? 0 : totalRisk / total;
-
-        // TEXT
-        totalItemsText.setText(total + " Items");
-        expiringItemsText.setText(expiring + " At Risk");
-        riskScoreText.setText(String.valueOf(avg));
-
-        if (customGauge != null) customGauge.setValue(avg);
-
-        // ================= PIE CHART =================
-        Map<String, Integer> categoryMap = new HashMap<>();
-
-        for (GroceryItem item : list) {
-            String category = item.getCategory();
-            if (category == null || category.trim().isEmpty()) category = "Other";
-            categoryMap.put(category, categoryMap.getOrDefault(category, 0) + 1);
-        }
-
-        categoryLegendMap = categoryMap;
-
-        List<PieEntry> pieEntries = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : categoryMap.entrySet()) {
-            pieEntries.add(new PieEntry(entry.getValue(), entry.getKey()));
-        }
-
-        PieDataSet pieSet = new PieDataSet(pieEntries, "");
-        pieSet.setColors(
-                android.graphics.Color.parseColor("#E8D18A"),
-                android.graphics.Color.parseColor("#D6B25E"),
-                android.graphics.Color.parseColor("#F1E2A0"),
-                android.graphics.Color.parseColor("#C2A24F")
-        );
-        pieSet.setDrawValues(false);
-
-        PieData pieData = new PieData(pieSet);
-        categoryChart.setData(pieData);
-
-        categoryChart.getLegend().setEnabled(false);
-        categoryChart.getDescription().setEnabled(false);
-        categoryChart.invalidate();
-
-        // ================= BAR CHART =================
-        BarDataSet barSet = new BarDataSet(barEntries, "");
-        barSet.setColor(android.graphics.Color.parseColor("#D6B25E"));
-        barSet.setDrawValues(false);
-
-        BarData barData = new BarData(barSet);
-        barChartExpiry.setData(barData);
-
-        barChartExpiry.getDescription().setEnabled(false);
-        barChartExpiry.getLegend().setEnabled(false);
-        barChartExpiry.getAxisRight().setEnabled(false);
-
-        barChartExpiry.invalidate();
-
-        // ================= LINE CHART =================
-        LineDataSet lineSet = new LineDataSet(lineEntries, "");
-        lineSet.setColor(android.graphics.Color.parseColor("#8E6B2F"));
-        lineSet.setCircleColor(android.graphics.Color.parseColor("#D6B25E"));
-        lineSet.setDrawValues(false);
-
-        LineData lineData = new LineData(lineSet);
-        lineChartTrend.setData(lineData);
-
-        lineChartTrend.getDescription().setEnabled(false);
-        lineChartTrend.getLegend().setEnabled(false);
-        lineChartTrend.getAxisRight().setEnabled(false);
-
-        lineChartTrend.invalidate();
-    }
-
-    private void showCategoryInfo() {
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-
-        for (Map.Entry<String, Integer> entry : categoryLegendMap.entrySet()) {
-            builder.append("• ")
-                    .append(entry.getKey())
-                    .append(" → ")
-                    .append(String.valueOf(entry.getValue()))
-                    .append("\n");
-        }
-
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Category Breakdown")
-                .setMessage(builder)
-                .setPositiveButton("Got it", null)
-                .show();
     }
 }
