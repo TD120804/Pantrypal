@@ -1,297 +1,787 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5EEE9">
+    android:background="#FFF8F0">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="22dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="22dp"
+        android:paddingBottom="115dp">
+
+        <!-- ================= HEADER ================= -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="125dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Back button -->
+
+            <ImageButton
+                android:id="@+id/buttonBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="4dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Back"
+                android:padding="8dp"
+                android:src="@drawable/ic_arrow_back"
+                app:tint="#304C2B" />
+
+            <!-- Title area -->
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Item"
+                    android:textColor="#304C2B"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Add a new item to your pantry"
+                    android:textColor="#8A806F"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- Existing illustration -->
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="2dp"
+                android:contentDescription="Fresh pantry vegetables"
+                android:scaleType="fitCenter"
+                android:src="@drawable/illustration_add_header" />
+
+        </LinearLayout>
+
+        <!-- ================= SCAN CARD ================= -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:layout_marginTop="4dp"
+            app:cardBackgroundColor="#EAF1DE"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="18dp"
+                android:paddingEnd="14dp">
+
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="#FFF8F0"
+                    android:contentDescription="Barcode scanner"
+                    android:padding="9dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_barcode" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Have a barcode?"
+                        android:textColor="#405D34"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Scan it and we'll fill in the details"
+                        android:textColor="#7E866F"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/buttonScan"
+                    android:layout_width="82dp"
+                    android:layout_height="40dp"
+                    android:backgroundTint="#73994D"
+                    android:text="Scan"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ================= TYPE TOGGLE ================= -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_type_toggle"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <!-- PACKAGED -->
+
+            <TextView
+                android:id="@+id/btnBranded"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_toggle_packaged"
+                android:gravity="center"
+                android:padding="0dp"
+                android:text="Packaged"
+                android:textColor="#49683A"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- FRESH / LOOSE -->
+
+            <TextView
+                android:id="@+id/btnLoose"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:padding="0dp"
+                android:text="Fresh / Loose"
+                android:textColor="#817766"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <!-- ================= ITEM NAME ================= -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Item name"
+            android:textColor="#526D42"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/bg_add_item_field"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp">
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:contentDescription="Item"
+                android:src="@drawable/ic_leaf" />
+
+            <EditText
+                android:id="@+id/editTextName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="e.g. Milk, Apples, Bread"
+                android:inputType="textCapSentences"
+                android:padding="0dp"
+                android:textColor="#3F4938"
+                android:textColorHint="#B0A697"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <!-- ================= CATEGORY ================= -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Category"
+            android:textColor="#526D42"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/categorySelector"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/bg_add_item_field"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:contentDescription="Category"
+                android:src="@drawable/ic_basket"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:id="@+id/textSelectedCategory"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:text="Dairy"
+                android:textColor="#45523B"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_downward_arrow" />
+
+        </LinearLayout>
+
+        <!-- Hidden spinner kept for existing save/update logic -->
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:visibility="gone" />
+
+        <!-- ================= QUANTITY + UNIT ================= -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
 
-            <!-- TITLE -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Item"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:textColor="#3A2A0A"
-                android:layout_marginBottom="4dp"/>
+            <!-- QUANTITY -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add a new grocery item to your pantry"
-                android:textSize="14sp"
-                android:textColor="#6B5B3E"
-                android:layout_marginBottom="18dp"/>
-
-            <!-- MODE TOGGLE -->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="@drawable/bg_toggle_track"
-                android:padding="4dp"
-                android:layout_marginBottom="16dp"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnBranded"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Branded"
-                    android:background="@drawable/bg_toggle_selected_soft"
-                    android:backgroundTint="@null"/>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnLoose"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Loose"
-                    android:background="@android:color/transparent"
-                    android:backgroundTint="@null"/>
-            </LinearLayout>
-
-            <!-- MAIN CARD -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="28dp"
-                app:cardElevation="10dp"
-                app:strokeWidth="2dp"
-                app:strokeColor="#D6B25E"
-                android:backgroundTint="#F8EFEA">
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quantity"
+                    android:textColor="#526D42"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+                    android:layout_height="56dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@drawable/bg_add_item_field"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="8dp">
 
-                    <!-- ITEM NAME -->
+                    <ImageView
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:contentDescription="Quantity"
+                        android:src="@drawable/ic_quantity"
+                        android:scaleType="centerInside" />
+
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Item Name"
-                        android:textColor="#3A2A0A"/>
+                        android:id="@+id/btnMinus"
+                        android:layout_width="30dp"
+                        android:layout_height="36dp"
+                        android:gravity="center"
+                        android:text="−"
+                        android:textColor="#70984C"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/editTextName"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/bg_input_soft"
-                        android:hint="Milk, Rice..."/>
+                        android:id="@+id/textQuantity"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:padding="0dp"
+                        android:text="1"
+                        android:textColor="#405D34"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-                    <!-- QUANTITY -->
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Quantity"
-                        android:textColor="#3A2A0A"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="6dp"
-                        android:orientation="horizontal">
-
-                        <!-- COUNTER -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_input_soft"
-                            android:orientation="horizontal"
-                            android:padding="4dp"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:id="@+id/btnMinus"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:gravity="center"
-                                android:text="-"
-                                android:background="@drawable/bg_capsule_outline"/>
-
-                            <TextView
-                                android:id="@+id/textQuantity"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="1"/>
-
-                            <TextView
-                                android:id="@+id/btnPlus"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:gravity="center"
-                                android:text="+"
-                                android:background="@drawable/bg_capsule_outline"/>
-                        </LinearLayout>
-
-                        <Space
-                            android:layout_width="8dp"
-                            android:layout_height="match_parent"/>
-
-                        <!-- UNIT -->
-                        <Spinner
-                            android:id="@+id/spinnerUnit"
-                            android:layout_width="120dp"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/bg_input_soft"/>
-                    </LinearLayout>
-
-                    <!-- CATEGORY -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Category"
-                        android:textColor="#3A2A0A"/>
-
-                    <Spinner
-                        android:id="@+id/spinnerCategory"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/bg_input_soft"/>
-
-                    <!-- BARCODE -->
-
-                    <LinearLayout
-                        android:id="@+id/layoutBarcode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="16dp">
-
-                        <!-- LABEL -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Barcode"
-                            android:textColor="#3A2A0A"/>
-
-                        <!-- FIELD ROW -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_marginTop="6dp"
-                            android:orientation="horizontal">
-
-                            <EditText
-                                android:id="@+id/editTextBarcode"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_input_soft"
-                                android:hint="Enter barcode"/>
-
-                            <Space
-                                android:layout_width="8dp"
-                                android:layout_height="match_parent"/>
-
-                            <Button
-                                android:id="@+id/buttonScan"
-                                android:layout_width="90dp"
-                                android:layout_height="match_parent"
-                                android:text="Scan"
-                                android:background="@drawable/bg_capsule_bronze"
-                                android:textColor="#2E1A0C"/>
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <!-- EXPIRY -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Expiry Date"
-                        android:textColor="#3A2A0A"/>
-
-                    <EditText
-                        android:id="@+id/editTextExpiry"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/bg_input_soft"
-                        android:hint="Select Date"
-                        android:focusable="false"/>
-
-                    <!-- NOTES -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Notes (Optional)"
-                        android:textColor="#3A2A0A"/>
-
-                    <EditText
-                        android:id="@+id/editTextNotes"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/bg_input_soft"
-                        android:hint="Add details..."/>
-
-                    <!-- ADD BUTTON -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/buttonSave"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="20dp"
-                        app:cardCornerRadius="50dp"
-                        app:cardElevation="6dp"
-                        android:backgroundTint="@android:color/transparent">
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/bg_capsule_bronze">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:text="+ Add Item"
-                                android:textColor="#2E1A0C"
-                                android:textStyle="bold"/>
-                        </FrameLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- CANCEL -->
-                    <Button
-                        android:id="@+id/buttonCancel"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/bg_capsule_outline"
-                        android:text="Cancel"
-                        android:textColor="#8E6B2F"/>
+                        android:id="@+id/btnPlus"
+                        android:layout_width="30dp"
+                        android:layout_height="36dp"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textColor="#70984C"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+
+            <!-- UNIT -->
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Unit"
+                    android:textColor="#526D42"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@drawable/bg_add_item_field"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="4dp">
+
+                    <ImageView
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:contentDescription="Unit"
+                        android:src="@drawable/ic_unit"
+                        android:scaleType="centerInside" />
+
+                    <Spinner
+                        android:id="@+id/spinnerUnit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:spinnerMode="dropdown" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!-- ================= EXPIRY ================= -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Expiry date"
+            android:textColor="#526D42"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="7dp"
+            android:background="#FFFDF9"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp">
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:contentDescription="Expiry date"
+                android:src="@drawable/ic_calendar" />
+
+            <EditText
+                android:id="@+id/editTextExpiry"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="9dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="false"
+                android:hint="Select expiry date"
+                android:padding="0dp"
+                android:textColor="#45523B"
+                android:textColorHint="#B0A697"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
+        <!-- ================= BARCODE ================= -->
+
+        <LinearLayout
+            android:id="@+id/layoutBarcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Barcode"
+                android:textColor="#526D42"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="7dp"
+                android:background="#FFFDF9"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp">
+
+                <ImageView
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:contentDescription="Barcode"
+                    android:src="@drawable/ic_barcode" />
+
+                <EditText
+                    android:id="@+id/editTextBarcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="9dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Enter or scan barcode"
+                    android:inputType="number"
+                    android:padding="0dp"
+                    android:textColor="#45523B"
+                    android:textColorHint="#B0A697"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- ================= NOTES ================= -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Notes"
+            android:textColor="#526D42"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="92dp"
+            android:layout_marginTop="7dp"
+            android:background="#FFFDF9"
+            android:gravity="top"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingTop="13dp"
+            android:paddingEnd="14dp">
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:contentDescription="Notes"
+                android:src="@drawable/ic_notes" />
+
+            <EditText
+                android:id="@+id/editTextNotes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="9dp"
+                android:background="@android:color/transparent"
+                android:gravity="top"
+                android:hint="Anything worth remembering..."
+                android:inputType="textCapSentences|textMultiLine"
+                android:padding="0dp"
+                android:textColor="#45523B"
+                android:textColorHint="#B0A697"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <!-- ================= ACTIONS ================= -->
+
+        <!-- ================= ADD TO PANTRY ================= -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/buttonSave"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="24dp"
+            app:cardBackgroundColor="#70984C"
+            app:cardCornerRadius="32dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <!-- Plus -->
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="+"
+                    android:textColor="#FFFFFF"
+                    android:textSize="38sp"
+                    android:textStyle="normal" />
+
+                <!-- Button text -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center"
+                    android:text="Add to Pantry"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        <!-- ================= CANCEL ================= -->
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="2dp"
+            android:background="@android:color/transparent"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:stateListAnimator="@null"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="#6F685D"
+            android:textSize="15sp" />
+    </LinearLayout>
     </ScrollView>
 
-</RelativeLayout>
+        <!-- ================= FLOATING BOTTOM NAV ================= -->
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottomNavCard"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="10dp"
+        app:cardBackgroundColor="#FFFDF8"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="8dp"
+        app:strokeColor="#EEE8DE"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <!-- HOME -->
+
+            <LinearLayout
+                android:id="@+id/navHome"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iconHome"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_home"
+                    android:contentDescription="Home" />
+
+                <TextView
+                    android:id="@+id/labelHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Home"
+                    android:textColor="#70984C"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- PANTRY -->
+
+            <LinearLayout
+                android:id="@+id/navPantry"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iconPantry"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_pantry"
+                    android:contentDescription="Pantry" />
+
+                <TextView
+                    android:id="@+id/labelPantry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pantry"
+                    android:textColor="#817B72"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <!-- COOK -->
+
+            <LinearLayout
+                android:id="@+id/navCook"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iconCook"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_cook"
+                    android:contentDescription="Cook" />
+
+                <TextView
+                    android:id="@+id/labelCook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cook"
+                    android:textColor="#817B72"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <!-- ANALYTICS -->
+
+            <LinearLayout
+                android:id="@+id/navAnalytics"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iconAnalytics"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_analytics"
+                    android:contentDescription="Analytics" />
+
+                <TextView
+                    android:id="@+id/labelAnalytics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Analytics"
+                    android:textColor="#817B72"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <!-- PROFILE -->
+
+            <LinearLayout
+                android:id="@+id/navProfile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iconProfile"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_profile"
+                    android:contentDescription="Profile" />
+
+                <TextView
+                    android:id="@+id/labelProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profile"
+                    android:textColor="#817B72"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>

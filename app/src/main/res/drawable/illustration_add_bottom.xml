@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="70dp"
+    android:viewportWidth="320"
+    android:viewportHeight="70">
+
+    <!-- Left leaves -->
+    <path
+        android:fillColor="#70984C"
+        android:pathData="M20,58 C12,45 16,32 30,28 C32,42 28,53 20,58 Z" />
+
+    <path
+        android:fillColor="#8BAE68"
+        android:pathData="M35,60 C32,47 39,37 52,36 C51,48 45,56 35,60 Z" />
+
+    <!-- Small heart -->
+    <path
+        android:fillColor="#E79A78"
+        android:pathData="M64,51 C58,44 47,48 49,56 C51,63 59,66 64,69 C69,66 77,63 79,56 C81,48 70,44 64,51 Z" />
+
+    <!-- Center carrot -->
+    <path
+        android:fillColor="#E99562"
+        android:pathData="M145,35 L175,35 L162,64 C160,68 154,68 152,64 Z" />
+
+    <path
+        android:fillColor="#70984C"
+        android:pathData="M153,36 C146,28 149,20 156,17 C158,25 157,31 153,36 Z" />
+
+    <path
+        android:fillColor="#86A85F"
+        android:pathData="M162,36 C162,27 168,22 176,23 C174,31 169,35 162,36 Z" />
+
+    <!-- Right leaves -->
+    <path
+        android:fillColor="#86A85F"
+        android:pathData="M260,60 C254,47 259,37 272,34 C274,47 269,56 260,60 Z" />
+
+    <path
+        android:fillColor="#70984C"
+        android:pathData="M279,60 C279,47 288,39 300,41 C297,53 290,59 279,60 Z" />
+
+    <!-- Tiny spark -->
+    <path
+        android:fillColor="#E7B46D"
+        android:pathData="M224,28 L227,36 L235,39 L227,42 L224,50 L221,42 L213,39 L221,36 Z" />
+
+</vector>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Calendar -->
+    <path
+        android:fillColor="#F2B47C"
+        android:pathData="M5,5 L19,5 L19,19 L5,19 Z" />
+
+    <!-- Top section -->
+    <path
+        android:fillColor="#D98A57"
+        android:pathData="M5,5 L19,5 L19,9 L5,9 Z" />
+
+    <!-- Binding tabs -->
+    <path
+        android:fillColor="#71994B"
+        android:pathData="M7,3 L9,3 L9,7 L7,7 Z" />
+
+    <path
+        android:fillColor="#71994B"
+        android:pathData="M15,3 L17,3 L17,7 L15,7 Z" />
+
+    <!-- Date dots -->
+    <path
+        android:fillColor="#FFF4DF"
+        android:pathData="M8,11 L10,11 L10,13 L8,13 Z" />
+
+    <path
+        android:fillColor="#FFF4DF"
+        android:pathData="M11,11 L13,11 L13,13 L11,13 Z" />
+
+    <path
+        android:fillColor="#FFF4DF"
+        android:pathData="M14,11 L16,11 L16,13 L14,13 Z" />
+
+    <path
+        android:fillColor="#FFF4DF"
+        android:pathData="M8,14 L10,14 L10,16 L8,16 Z" />
+
+    <path
+        android:fillColor="#FFF4DF"
+        android:pathData="M11,14 L13,14 L13,16 L11,16 Z" />
+
+</vector>

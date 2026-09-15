@@ -18,6 +18,7 @@ import com.example.pantrypal.models.GroceryItem;
 import com.example.pantrypal.scanner.BarcodeScannerActivity;
 import com.example.pantrypal.viewmodels.GroceryViewModel;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -29,10 +30,12 @@ import java.time.format.DateTimeFormatter;
 
 public class AddGroceryActivity extends AppCompatActivity {
 
-    // UI
-    private EditText editName, editExpiry, editNotes, editBarcode;
-    private TextView textQuantity;
+    // ================= UI =================
+
+    private EditText editName, editExpiry, editNotes, editBarcode, textQuantity;
     private Spinner spinnerUnit, spinnerCategory;
+
+    private TextView textSelectedCategory;
 
     private View btnBranded, btnLoose;
     private View layoutBarcode;
@@ -45,212 +48,759 @@ public class AddGroceryActivity extends AppCompatActivity {
     private final DateTimeFormatter formatter =
             DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+
+    // ================= CREATE =================
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_add_grocery);
+        findViewById(R.id.buttonBack).setOnClickListener(v -> finish());
 
-        viewModel = new ViewModelProvider(this).get(GroceryViewModel.class);
+        viewModel = new ViewModelProvider(this)
+                .get(GroceryViewModel.class);
 
-        // 🔥 INIT VIEWS
+
+        // ================= INIT VIEWS =================
+
         editName = findViewById(R.id.editTextName);
         editExpiry = findViewById(R.id.editTextExpiry);
         editNotes = findViewById(R.id.editTextNotes);
         editBarcode = findViewById(R.id.editTextBarcode);
 
         textQuantity = findViewById(R.id.textQuantity);
+
         spinnerUnit = findViewById(R.id.spinnerUnit);
         spinnerCategory = findViewById(R.id.spinnerCategory);
 
-        TextView btnPlus = findViewById(R.id.btnPlus);
-        TextView btnMinus = findViewById(R.id.btnMinus);
+        textSelectedCategory =
+                findViewById(R.id.textSelectedCategory);
 
-        MaterialCardView buttonSave = findViewById(R.id.buttonSave);
-        Button buttonCancel = findViewById(R.id.buttonCancel);
-        Button buttonScan = findViewById(R.id.buttonScan);
+        View categorySelector =
+                findViewById(R.id.categorySelector);
 
-        btnBranded = findViewById(R.id.btnBranded);
-        btnLoose = findViewById(R.id.btnLoose);
 
-        layoutBarcode = findViewById(R.id.layoutBarcode);
+        TextView btnPlus =
+                findViewById(R.id.btnPlus);
 
-        // 🔥 SPINNERS
-        String[] units = {"kg", "g", "L", "ml", "pcs"};
-        String[] categories = {"Dairy", "Fruits", "Vegetables", "Snacks", "Other"};
+        TextView btnMinus =
+                findViewById(R.id.btnMinus);
 
-        spinnerUnit.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item, units));
 
-        spinnerCategory.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item, categories));
+        MaterialCardView buttonSave =
+                findViewById(R.id.buttonSave);
 
-        // 🔥 COUNTER
-        textQuantity.setText(String.valueOf(quantity));
+        Button buttonCancel =
+                findViewById(R.id.buttonCancel);
+
+        Button buttonScan =
+                findViewById(R.id.buttonScan);
+
+
+        btnBranded =
+                findViewById(R.id.btnBranded);
+
+        btnLoose =
+                findViewById(R.id.btnLoose);
+
+        layoutBarcode =
+                findViewById(R.id.layoutBarcode);
+
+
+        // ================= SPINNERS =================
+
+        String[] units = {
+                "kg",
+                "g",
+                "L",
+                "ml",
+                "pcs"
+        };
+
+
+        String[] categories = {
+                "Vegetables",
+                "Fruits",
+                "Dairy",
+                "Grains",
+                "Proteins",
+                "Condiments",
+                "Snacks",
+                "Other"
+        };
+
+
+        spinnerUnit.setAdapter(
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_dropdown_item,
+                        units
+                )
+        );
+
+
+        spinnerCategory.setAdapter(
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_dropdown_item,
+                        categories
+                )
+        );
+
+
+        // Default category
+
+        textSelectedCategory.setText("Select category");
+
+
+        // Open custom category picker
+
+        categorySelector.setOnClickListener(
+                v -> showCategoryPicker()
+        );
+
+
+        // ================= QUANTITY =================
+
+        textQuantity.setText(
+                String.valueOf(quantity)
+        );
+
 
         btnPlus.setOnClickListener(v -> {
+
+            updateQuantityFromInput();
+
             quantity++;
-            textQuantity.setText(String.valueOf(quantity));
+
+            textQuantity.setText(
+                    String.valueOf(quantity)
+            );
+
         });
+
 
         btnMinus.setOnClickListener(v -> {
+
+            updateQuantityFromInput();
+
             if (quantity > 1) {
+
                 quantity--;
-                textQuantity.setText(String.valueOf(quantity));
+
+                textQuantity.setText(
+                        String.valueOf(quantity)
+                );
+
             }
+
         });
 
-        // 🔥 DATE PICKER
-        editExpiry.setFocusable(false);
-        editExpiry.setOnClickListener(v -> showDatePicker());
 
-        // 🔥 TOGGLE (BRANDED / LOOSE)
+        // ================= DATE PICKER =================
+
+        editExpiry.setFocusable(false);
+
+        editExpiry.setOnClickListener(
+                v -> showDatePicker()
+        );
+
+
+        // ================= TOGGLE =================
+// 🔥 TOGGLE (PACKAGED / FRESH-LOOSE)
 
         btnBranded.setOnClickListener(v -> {
-            btnBranded.setBackgroundResource(R.drawable.bg_toggle_selected_pearl);
+
+            // Packaged selected
+            btnBranded.setBackgroundResource(R.drawable.bg_toggle_packaged);
             btnLoose.setBackgroundResource(android.R.color.transparent);
+
+            btnBranded.setAlpha(1f);
+            btnLoose.setAlpha(0.75f);
 
             layoutBarcode.setVisibility(View.VISIBLE);
         });
 
         btnLoose.setOnClickListener(v -> {
-            btnLoose.setBackgroundResource(R.drawable.bg_toggle_selected_soft);
+
+            // Fresh / Loose selected
+            btnLoose.setBackgroundResource(R.drawable.bg_toggle_fresh);
             btnBranded.setBackgroundResource(android.R.color.transparent);
 
+            btnLoose.setAlpha(1f);
+            btnBranded.setAlpha(0.75f);
+
             layoutBarcode.setVisibility(View.GONE);
+
+            // Fresh / loose items don't need a barcode
             editBarcode.setText("");
         });
 
-        // DEFAULT
+// DEFAULT → Packaged
         btnBranded.performClick();
 
-        // 🔥 SCANNER BUTTON
+        // ================= SCANNER =================
+
         buttonScan.setOnClickListener(v -> {
-            Intent intent = new Intent(AddGroceryActivity.this, BarcodeScannerActivity.class);
-            startActivityForResult(intent, 100);
+
+            Intent intent = new Intent(
+                    AddGroceryActivity.this,
+                    BarcodeScannerActivity.class
+            );
+
+            startActivityForResult(
+                    intent,
+                    100
+            );
+
         });
 
-        // 🔥 SAVE / CANCEL
-        buttonSave.setOnClickListener(v -> saveItem());
-        buttonCancel.setOnClickListener(v -> finish());
 
-        // 🔥 EDIT MODE
-        editItemId = getIntent().getIntExtra("EDIT_ITEM_ID", -1);
+        // ================= SAVE / CANCEL =================
+
+        buttonSave.setOnClickListener(
+                v -> saveItem()
+        );
+
+        buttonCancel.setOnClickListener(
+                v -> finish()
+        );
+
+
+        // ================= EDIT MODE =================
+
+        editItemId =
+                getIntent().getIntExtra(
+                        "EDIT_ITEM_ID",
+                        -1
+                );
+
 
         if (editItemId != -1) {
-            setTitle("Edit Item");
-            loadItemData(editItemId);
-        } else {
-            setTitle("Add Item");
-        }
-        String scannedBarcode = getIntent().getStringExtra("barcode");
 
-        if (scannedBarcode != null && !scannedBarcode.isEmpty()) {
-            editBarcode.setText(scannedBarcode);
-            btnBranded.performClick();
+            setTitle("Edit Item");
+
+            loadItemData(editItemId);
+
+        } else {
+
+            setTitle("Add Item");
+
         }
+
+
+        // ================= SCANNED BARCODE =================
+
+        String scannedBarcode =
+                getIntent().getStringExtra("barcode");
+
+
+        if (scannedBarcode != null
+                && !scannedBarcode.isEmpty()) {
+
+            editBarcode.setText(
+                    scannedBarcode
+            );
+
+            btnBranded.performClick();
+
+        }
+
     }
 
-    // 🔥 RECEIVE SCAN RESULT
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-            String barcode = data.getStringExtra("barcode");
+    // ================= RECEIVE SCAN RESULT =================
+
+    @Override
+    protected void onActivityResult(
+            int requestCode,
+            int resultCode,
+            Intent data) {
+
+        super.onActivityResult(
+                requestCode,
+                resultCode,
+                data
+        );
+
+
+        if (requestCode == 100
+                && resultCode == RESULT_OK
+                && data != null) {
+
+            String barcode =
+                    data.getStringExtra("barcode");
+
 
             if (barcode != null) {
-                editBarcode.setText(barcode);
+
+                editBarcode.setText(
+                        barcode
+                );
+
             }
+
         }
+
     }
+
+
+    // ================= LOAD ITEM =================
 
     private void loadItemData(int id) {
 
-        viewModel.getAllItems().observe(this, list -> {
-            for (GroceryItem item : list) {
-                if (item.getId() == id) {
+        viewModel.getAllItems().observe(
+                this,
+                list -> {
 
-                    editName.setText(item.getName());
-                    editExpiry.setText(item.getExpiryDate());
-                    editNotes.setText(item.getNotes());
-                    editBarcode.setText(item.getBarcode());
+                    for (GroceryItem item : list) {
 
-                    quantity = item.getQuantity();
-                    textQuantity.setText(String.valueOf(quantity));
+                        if (item.getId() == id) {
 
-                    // category
-                    ArrayAdapter adapter = (ArrayAdapter) spinnerCategory.getAdapter();
-                    int pos = adapter.getPosition(item.getCategory());
-                    spinnerCategory.setSelection(pos);
+                            editName.setText(
+                                    item.getName()
+                            );
 
-                    // toggle
-                    if (item.getBarcode() != null && !item.getBarcode().isEmpty()) {
-                        btnBranded.performClick();
-                    } else {
-                        btnLoose.performClick();
+                            editExpiry.setText(
+                                    item.getExpiryDate()
+                            );
+
+                            editNotes.setText(
+                                    item.getNotes()
+                            );
+
+                            editBarcode.setText(
+                                    item.getBarcode()
+                            );
+
+
+                            quantity =
+                                    item.getQuantity();
+
+                            textQuantity.setText(
+                                    String.valueOf(quantity)
+                            );
+
+
+                            // ================= CATEGORY =================
+
+                            ArrayAdapter adapter =
+                                    (ArrayAdapter)
+                                            spinnerCategory.getAdapter();
+
+                            int pos =
+                                    adapter.getPosition(
+                                            item.getCategory()
+                                    );
+
+
+                            if (pos >= 0) {
+
+                                spinnerCategory
+                                        .setSelection(pos);
+
+                                textSelectedCategory
+                                        .setText(
+                                                item.getCategory()
+                                        );
+
+                            }
+
+
+                            // ================= TOGGLE =================
+
+                            if (item.getBarcode() != null
+                                    && !item.getBarcode().isEmpty()) {
+
+                                btnBranded.performClick();
+
+                            } else {
+
+                                btnLoose.performClick();
+
+                            }
+
+
+                            break;
+
+                        }
+
                     }
 
-                    break;
                 }
-            }
-        });
+        );
+
     }
+
+
+    // ================= CATEGORY PICKER =================
+
+    private void showCategoryPicker() {
+
+        BottomSheetDialog dialog =
+                new BottomSheetDialog(this);
+
+
+        View view =
+                getLayoutInflater()
+                        .inflate(
+                                R.layout.bottom_sheet_category,
+                                null
+                        );
+
+
+        dialog.setContentView(view);
+
+
+        // Category rows
+
+        View categoryVegetables =
+                view.findViewById(
+                        R.id.categoryVegetables
+                );
+
+        View categoryFruits =
+                view.findViewById(
+                        R.id.categoryFruits
+                );
+
+        View categoryDairy =
+                view.findViewById(
+                        R.id.categoryDairy
+                );
+
+        View categoryGrains =
+                view.findViewById(
+                        R.id.categoryGrains
+                );
+
+        View categoryProteins =
+                view.findViewById(
+                        R.id.categoryProteins
+                );
+
+        View categoryCondiments =
+                view.findViewById(
+                        R.id.categoryCondiments
+                );
+
+        View categorySnacks =
+                view.findViewById(
+                        R.id.categorySnacks
+                );
+
+        View categoryOther =
+                view.findViewById(
+                        R.id.categoryOther
+                );
+
+
+        // ================= CLICK LISTENERS =================
+
+        categoryVegetables.setOnClickListener(v -> {
+
+            selectCategory("Vegetables");
+
+            dialog.dismiss();
+
+        });
+
+
+        categoryFruits.setOnClickListener(v -> {
+
+            selectCategory("Fruits");
+
+            dialog.dismiss();
+
+        });
+
+
+        categoryDairy.setOnClickListener(v -> {
+
+            selectCategory("Dairy");
+
+            dialog.dismiss();
+
+        });
+
+
+        categoryGrains.setOnClickListener(v -> {
+
+            selectCategory("Grains");
+
+            dialog.dismiss();
+
+        });
+
+
+        categoryProteins.setOnClickListener(v -> {
+
+            selectCategory("Proteins");
+
+            dialog.dismiss();
+
+        });
+
+
+        categoryCondiments.setOnClickListener(v -> {
+
+            selectCategory("Condiments");
+
+            dialog.dismiss();
+
+        });
+
+
+        categorySnacks.setOnClickListener(v -> {
+
+            selectCategory("Snacks");
+
+            dialog.dismiss();
+
+        });
+
+
+        categoryOther.setOnClickListener(v -> {
+
+            selectCategory("Other");
+
+            dialog.dismiss();
+
+        });
+
+
+        dialog.show();
+
+    }
+
+
+    // ================= SELECT CATEGORY =================
+
+    private void selectCategory(String category) {
+
+        textSelectedCategory.setText(
+                category
+        );
+
+
+        ArrayAdapter adapter =
+                (ArrayAdapter)
+                        spinnerCategory.getAdapter();
+
+
+        int position =
+                adapter.getPosition(category);
+
+
+        if (position >= 0) {
+
+            spinnerCategory.setSelection(
+                    position
+            );
+
+        }
+
+    }
+
+
+    // ================= DATE PICKER =================
 
     private void showDatePicker() {
 
-        CalendarConstraints constraints = new CalendarConstraints.Builder()
-                .setValidator(DateValidatorPointForward.now())
-                .build();
-
-        MaterialDatePicker<Long> picker =
-                MaterialDatePicker.Builder.datePicker()
-                        .setTitleText("Select Expiry Date")
-                        .setCalendarConstraints(constraints)
+        CalendarConstraints constraints =
+                new CalendarConstraints.Builder()
+                        .setValidator(
+                                DateValidatorPointForward.now()
+                        )
                         .build();
 
-        picker.show(getSupportFragmentManager(), "DATE_PICKER");
 
-        picker.addOnPositiveButtonClickListener(selection -> {
+        MaterialDatePicker<Long> picker =
+                MaterialDatePicker.Builder
+                        .datePicker()
+                        .setTitleText(
+                                "Select Expiry Date"
+                        )
+                        .setCalendarConstraints(
+                                constraints
+                        )
+                        .build();
 
-            LocalDate selectedDate = Instant.ofEpochMilli(selection)
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
 
-            editExpiry.setText(selectedDate.format(formatter));
-        });
+        picker.show(
+                getSupportFragmentManager(),
+                "DATE_PICKER"
+        );
+
+
+        picker.addOnPositiveButtonClickListener(
+                selection -> {
+
+                    LocalDate selectedDate =
+                            Instant
+                                    .ofEpochMilli(selection)
+                                    .atZone(
+                                            ZoneId.systemDefault()
+                                    )
+                                    .toLocalDate();
+
+
+                    editExpiry.setText(
+                            selectedDate.format(
+                                    formatter
+                            )
+                    );
+
+                }
+        );
+
     }
+
+
+    // ================= QUANTITY =================
+
+    private void updateQuantityFromInput() {
+
+        String value =
+                textQuantity
+                        .getText()
+                        .toString()
+                        .trim();
+
+
+        if (value.isEmpty()) {
+
+            quantity = 1;
+
+            textQuantity.setText("1");
+
+            return;
+
+        }
+
+
+        try {
+
+            quantity =
+                    Integer.parseInt(value);
+
+
+            if (quantity < 1) {
+
+                quantity = 1;
+
+                textQuantity.setText("1");
+
+            }
+
+        } catch (NumberFormatException e) {
+
+            quantity = 1;
+
+            textQuantity.setText("1");
+
+        }
+
+    }
+
+
+    // ================= SAVE ITEM =================
 
     private void saveItem() {
 
-        String name = editName.getText().toString().trim();
-        String category = spinnerCategory.getSelectedItem().toString();
-        String expiry = editExpiry.getText().toString().trim();
-        String notes = editNotes.getText().toString().trim();
-        String barcode = editBarcode.getText().toString().trim();
+        updateQuantityFromInput();
 
-        if (name.isEmpty() || expiry.isEmpty()) {
-            Toast.makeText(this, "Name & Expiry required", Toast.LENGTH_SHORT).show();
+
+        String name =
+                editName
+                        .getText()
+                        .toString()
+                        .trim();
+
+
+        String category =
+                spinnerCategory
+                        .getSelectedItem()
+                        .toString();
+
+
+        String expiry =
+                editExpiry
+                        .getText()
+                        .toString()
+                        .trim();
+
+
+        String notes =
+                editNotes
+                        .getText()
+                        .toString()
+                        .trim();
+
+
+        String barcode =
+                editBarcode
+                        .getText()
+                        .toString()
+                        .trim();
+
+
+        if (name.isEmpty()
+                || expiry.isEmpty()) {
+
+            Toast.makeText(
+                    this,
+                    "Name & Expiry required",
+                    Toast.LENGTH_SHORT
+            ).show();
+
             return;
+
         }
 
-        GroceryItem item = new GroceryItem(
-                name,
-                quantity,
-                category,
-                expiry,
-                notes,
-                barcode
-        );
+
+        GroceryItem item =
+                new GroceryItem(
+                        name,
+                        quantity,
+                        category,
+                        expiry,
+                        notes,
+                        barcode
+                );
+
 
         if (editItemId != -1) {
-            item.setId(editItemId);
+
+            item.setId(
+                    editItemId
+            );
+
             viewModel.update(item);
-            Toast.makeText(this, "Item Updated!", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(
+                    this,
+                    "Item Updated!",
+                    Toast.LENGTH_SHORT
+            ).show();
+
         } else {
+
             viewModel.insert(item);
-            Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(
+                    this,
+                    "Item Added!",
+                    Toast.LENGTH_SHORT
+            ).show();
+
         }
 
+
         finish();
+
     }
+
 }

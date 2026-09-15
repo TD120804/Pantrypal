@@ -24,5 +24,6 @@
     <item name="editTextNotes" type="id"/>
     <item name="buttonSave" type="id"/>
     <item name="buttonCancel" type="id"/>
+    <item name="scanCard" type="id" />
 
 </resources>

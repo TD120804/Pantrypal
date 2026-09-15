@@ -30,7 +30,7 @@
             android:id="@+id/image_empty_expiring"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:src="@drawable/ic_vegetable"
+            android:src="@drawable/ic_category_vegetables"
             android:visibility="visible"
             app:tint="#8C7AAE" />
 

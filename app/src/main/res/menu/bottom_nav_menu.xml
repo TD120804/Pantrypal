@@ -4,17 +4,27 @@
 
     <item
         android:id="@+id/nav_home"
-        android:title="Home"
-        android:icon="@android:drawable/ic_menu_view"/>
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
 
     <item
-        android:id="@+id/nav_items"
-        android:title="Items"
-        android:icon="@android:drawable/ic_menu_agenda"/>
+        android:id="@+id/nav_pantry"
+        android:icon="@drawable/ic_pantry"
+        android:title="Pantry" />
 
     <item
-        android:id="@+id/nav_scan"
-        android:title="Scan"
-        android:icon="@android:drawable/ic_menu_camera"/>
+        android:id="@+id/nav_cook"
+        android:icon="@drawable/ic_cook"
+        android:title="Cook" />
+
+    <item
+        android:id="@+id/nav_analytics"
+        android:icon="@drawable/ic_analytics"
+        android:title="Analytics" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile" />
 
 </menu>

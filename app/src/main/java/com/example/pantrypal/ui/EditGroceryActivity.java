@@ -21,8 +21,7 @@ public class EditGroceryActivity extends AppCompatActivity {
 
     private GroceryViewModel viewModel;
 
-    private EditText edtName, edtExpiry, edtNotes, edtBarcode;
-    private TextView textQuantity;
+    private EditText edtName, edtExpiry, edtNotes, edtBarcode, textQuantity;
     private Spinner spinnerCategory;
 
     private MaterialCardView btnSave;
@@ -88,16 +87,26 @@ public class EditGroceryActivity extends AppCompatActivity {
         int pos = adapter.getPosition(currentItem.getCategory());
         spinnerCategory.setSelection(pos);
 
-        // 🔥 COUNTER LOGIC
+// 🔥 QUANTITY
         btnPlus.setOnClickListener(v -> {
+
+            updateQuantityFromInput();
+
             quantity++;
+
             textQuantity.setText(String.valueOf(quantity));
         });
 
         btnMinus.setOnClickListener(v -> {
+
+            updateQuantityFromInput();
+
             if (quantity > 1) {
                 quantity--;
-                textQuantity.setText(String.valueOf(quantity));
+
+                textQuantity.setText(
+                        String.valueOf(quantity)
+                );
             }
         });
 
@@ -105,7 +114,39 @@ public class EditGroceryActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> updateItem());
     }
 
+    private void updateQuantityFromInput() {
+
+        String value = textQuantity.getText()
+                .toString()
+                .trim();
+
+        if (value.isEmpty()) {
+
+            quantity = 1;
+            textQuantity.setText("1");
+
+            return;
+        }
+
+        try {
+
+            quantity = Integer.parseInt(value);
+
+            if (quantity < 1) {
+
+                quantity = 1;
+                textQuantity.setText("1");
+            }
+
+        } catch (NumberFormatException e) {
+
+            quantity = 1;
+            textQuantity.setText("1");
+        }
+    }
+
     private void updateItem() {
+        updateQuantityFromInput();
 
         String name = edtName.getText().toString().trim();
         String expiry = edtExpiry.getText().toString().trim();

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="105dp"
+    android:viewportWidth="120"
+    android:viewportHeight="105">
+
+    <!-- LEFT LEAF -->
+
+    <path
+        android:fillColor="#7FA45A"
+        android:pathData="M28,48 C18,38 9,37 2,42 C9,53 18,55 28,48Z" />
+
+    <path
+        android:fillColor="#A6BF72"
+        android:pathData="M22,39 C15,30 15,22 20,17 C28,24 29,32 22,39Z" />
+
+
+    <!-- RIGHT LEAVES -->
+
+    <path
+        android:fillColor="#7FA45A"
+        android:pathData="M91,40 C92,24 102,13 115,11 C114,27 105,39 91,40Z" />
+
+    <path
+        android:fillColor="#A6BF72"
+        android:pathData="M99,51 C102,39 111,31 119,32 C117,44 109,51 99,51Z" />
+
+
+    <!-- TOMATO -->
+
+    <path
+        android:fillColor="#E75D43"
+        android:pathData="M24,64 C24,51 34,43 47,43 C60,43 69,51 69,64 C69,78 60,87 47,87 C34,87 24,78 24,64Z" />
+
+    <!-- TOMATO HIGHLIGHT -->
+
+    <path
+        android:fillColor="#F27D61"
+        android:pathData="M31,55 C27,62 30,72 36,77 C39,79 40,76 37,72 C33,66 34,60 37,55Z" />
+
+    <!-- TOMATO LEAVES -->
+
+    <path
+        android:fillColor="#4F7835"
+        android:pathData="M47,47 C42,39 44,31 51,27 C55,35 54,42 49,48Z" />
+
+    <path
+        android:fillColor="#668F45"
+        android:pathData="M49,47 C54,37 62,34 68,37 C64,44 57,48 49,49Z" />
+
+    <path
+        android:fillColor="#789D4F"
+        android:pathData="M46,48 C38,44 35,37 37,31 C44,34 48,40 48,48Z" />
+
+
+    <!-- TOMATO EYES -->
+
+    <path
+        android:fillColor="#49352D"
+        android:pathData="M37,62 C37,60.5 38,59.5 39.5,59.5 C41,59.5 42,60.5 42,62 C42,63.5 41,64.5 39.5,64.5 C38,64.5 37,63.5 37,62Z" />
+
+    <path
+        android:fillColor="#49352D"
+        android:pathData="M52,62 C52,60.5 53,59.5 54.5,59.5 C56,59.5 57,60.5 57,62 C57,63.5 56,64.5 54.5,64.5 C53,64.5 52,63.5 52,62Z" />
+
+    <!-- TOMATO SMILE -->
+
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M41,70 C44,74 48,74 51,70"
+        android:strokeColor="#49352D"
+        android:strokeWidth="1.7"
+        android:strokeLineCap="round" />
+
+
+    <!-- CARROT -->
+
+    <path
+        android:fillColor="#F29A3D"
+        android:pathData="M66,42 C77,39 87,46 88,61 C89,76 82,94 72,99 C61,94 56,76 58,61 C59,50 62,44 66,42Z" />
+
+    <!-- CARROT HIGHLIGHT -->
+
+    <path
+        android:fillColor="#FFB55C"
+        android:pathData="M65,49 C61,60 63,73 68,82 C70,85 72,83 71,78 C67,67 67,57 70,49Z" />
+
+    <!-- CARROT LEAVES -->
+
+    <path
+        android:fillColor="#557A39"
+        android:pathData="M70,43 C65,34 67,24 75,19 C78,29 77,37 72,45Z" />
+
+    <path
+        android:fillColor="#72974D"
+        android:pathData="M73,43 C74,31 81,23 89,22 C88,33 82,41 74,46Z" />
+
+    <path
+        android:fillColor="#91AE61"
+        android:pathData="M68,43 C58,37 56,28 60,20 C68,26 71,34 70,43Z" />
+
+
+    <!-- CARROT EYES -->
+
+    <path
+        android:fillColor="#3C342B"
+        android:pathData="M65,63 C65,61.5 66,60.5 67.5,60.5 C69,60.5 70,61.5 70,63 C70,64.5 69,65.5 67.5,65.5 C66,65.5 65,64.5 65,63Z" />
+
+    <path
+        android:fillColor="#3C342B"
+        android:pathData="M77,63 C77,61.5 78,60.5 79.5,60.5 C81,60.5 82,61.5 82,63 C82,64.5 81,65.5 79.5,65.5 C78,65.5 77,64.5 77,63Z" />
+
+    <!-- CARROT SMILE -->
+
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M69,72 C72,76 76,76 79,72"
+        android:strokeColor="#3C342B"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round" />
+
+
+    <!-- WOODEN BOX -->
+
+    <path
+        android:fillColor="#B8783C"
+        android:pathData="M18,86 L92,86 L89,101 L21,101 Z" />
+
+    <path
+        android:fillColor="#D29450"
+        android:pathData="M20,87 L90,87 L89,93 L21,93 Z" />
+
+    <path
+        android:fillColor="#8F5D31"
+        android:pathData="M26,96 L86,96 L85,99 L27,99 Z" />
+
+
+    <!-- LITTLE HEART -->
+
+    <path
+        android:fillColor="#ED7659"
+        android:pathData="M96,18 C92,13 85,16 87,21 C89,25 96,29 96,29 C96,29 103,25 105,21 C107,16 100,13 96,18Z" />
+
+</vector>

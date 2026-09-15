@@ -9,7 +9,7 @@
         android:id="@+id/nav_home"
         android:name="com.example.pantrypal.ui.home.AllItemsFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_all_items" />
+        tools:layout="@layout/fragment_all_items_ver2" />
 
     <fragment
         android:id="@+id/nav_gallery"

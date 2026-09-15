@@ -1,8 +1,9 @@
 package com.example.pantrypal.ai.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeResponse {
+public class RecipeResponse implements java.io.Serializable{
 
     private String recipeName;
     private String cookTime;
@@ -16,6 +17,9 @@ public class RecipeResponse {
     private String nutrition;
 
     public RecipeResponse() {
+        ingredientsUsed = new ArrayList<>();
+        missingIngredients = new ArrayList<>();
+        steps = new ArrayList<>();
     }
 
     public String getRecipeName() {

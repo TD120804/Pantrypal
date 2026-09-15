@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Lid -->
+    <path
+        android:fillColor="#E9A66B"
+        android:pathData="M8,4 L16,4 L17,6 L7,6 Z" />
+
+    <!-- Jar body -->
+    <path
+        android:fillColor="#F4C58D"
+        android:pathData="M7,7 L17,7 L16,20 L8,20 Z" />
+
+    <!-- Label -->
+    <path
+        android:fillColor="#FFF3D9"
+        android:pathData="M9,11 L15,11 L15,16 L9,16 Z" />
+
+    <!-- Small leaf on label -->
+    <path
+        android:fillColor="#71994B"
+        android:pathData="M10,14 C10,12.5 11.3,12 13,12 C12.7,13.7 12,14.6 10,14 Z" />
+
+</vector>
