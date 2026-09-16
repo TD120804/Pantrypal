@@ -17,8 +17,8 @@ public class NotificationScheduler {
         PeriodicWorkRequest request =
                 new PeriodicWorkRequest.Builder(
                         ExpiryWorker.class,
-                        15,
-                        TimeUnit.MINUTES
+                        24,
+                        TimeUnit.HOURS
                 )
                         .build();
 
