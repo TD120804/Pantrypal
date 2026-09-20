@@ -3,62 +3,81 @@
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAF7F1"
-    android:fillViewport="true">
+
+    android:background="#FFF8F2"
+
+    android:fillViewport="true"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="18dp"
-        android:paddingBottom="24dp">
 
-        <!-- ============================================ -->
-        <!-- HEADER                                       -->
-        <!-- ============================================ -->
+        android:orientation="vertical"
+
+        android:paddingStart="20dp"
+        android:paddingTop="22dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="120dp">
+
+        <!-- ================================================= -->
+        <!-- HEADER                                            -->
+        <!-- ================================================= -->
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:text="📊 Analytics 🌿"
+
             android:textColor="#2B2118"
-            android:textSize="27sp"
+            android:textSize="28sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:layout_marginTop="5dp"
-            android:text="Insights and stats about your pantry"
+
+            android:text="Understand what's happening in your pantry"
+
             android:textColor="#77716A"
             android:textSize="14sp" />
 
 
-        <!-- ============================================ -->
-        <!-- FILTERS                                      -->
-        <!-- ============================================ -->
+        <!-- ================================================= -->
+        <!-- FILTERS                                           -->
+        <!-- ================================================= -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+
+            android:layout_marginTop="18dp"
+
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnTimeFilter"
+
                 android:layout_width="0dp"
                 android:layout_height="44dp"
+
                 android:layout_weight="1"
+
                 android:text="This Week  ▼"
                 android:textAllCaps="false"
+
                 android:textColor="#403A34"
                 android:textSize="13sp"
+
                 app:backgroundTint="#FFFFFF"
                 app:cornerRadius="22dp"
+
                 app:strokeColor="#E2D9CC"
                 app:strokeWidth="1dp" />
 
@@ -68,67 +87,116 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCategoryFilter"
+
                 android:layout_width="0dp"
                 android:layout_height="44dp"
+
                 android:layout_weight="1"
+
                 android:text="All Categories  ▼"
                 android:textAllCaps="false"
+
                 android:textColor="#403A34"
                 android:textSize="13sp"
+
                 app:backgroundTint="#FFFFFF"
                 app:cornerRadius="22dp"
+
                 app:strokeColor="#E2D9CC"
                 app:strokeWidth="1dp" />
 
         </LinearLayout>
 
 
-        <!-- ============================================ -->
-        <!-- KPI CARDS -->
-        <!-- ============================================ -->
+        <!-- ================================================= -->
+        <!-- KPI GRID                                           -->
+        <!-- ================================================= -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+
+            android:layout_marginTop="18dp"
+
             android:orientation="vertical">
+
 
             <!-- ================= ROW 1 ================= -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:orientation="horizontal">
 
-                <!-- PANTRY HEALTH -->
+
+                <!-- WASTE RISK -->
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
-                    android:layout_height="125dp"
+                    android:layout_height="132dp"
+
                     android:layout_weight="1"
                     android:layout_marginEnd="6dp"
+
+                    app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="20dp"
-                    app:cardElevation="1dp"
-                    app:cardBackgroundColor="#FFFFFF">
+                    app:cardElevation="1dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+
                         android:orientation="vertical"
-                        android:padding="14dp">
+
+                        android:padding="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="center_vertical"
+
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+
+                                android:layout_weight="1"
+
+                                android:text="⚠️ Waste Risk"
+
+                                android:textColor="#2B2118"
+                                android:textSize="12sp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnWasteRiskInfo"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:minWidth="0dp"
+                                android:minHeight="0dp"
+                                android:padding="9dp"
+                                app:icon="@drawable/ic_info"
+                                app:iconGravity="textStart"
+                                app:iconPadding="0dp"
+                                app:iconTint="@null"
+                                app:backgroundTint="#EAF5E4"
+                                app:cornerRadius="20dp"
+                                app:strokeColor="#C9DEBD"
+                                app:strokeWidth="1dp" />
+                        </LinearLayout>
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="🌿"
-                            android:textSize="22sp" />
+                            android:id="@+id/textWasteRisk"
 
-                        <TextView
-                            android:id="@+id/textAnalysisScore"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:text="100%"
+
+                            android:layout_marginTop="8dp"
+
+                            android:text="0%"
+
                             android:textColor="#2B2118"
                             android:textSize="23sp"
                             android:textStyle="bold" />
@@ -136,16 +204,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pantry Health"
-                            android:textColor="#555555"
-                            android:textSize="13sp" />
 
-                        <TextView
-                            android:id="@+id/textAnalysisStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Excellent"
-                            android:textColor="#6E9E4A"
+                            android:layout_marginTop="2dp"
+
+                            android:text="Average pantry risk"
+
+                            android:textColor="#D28A35"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -154,37 +218,47 @@
                 </com.google.android.material.card.MaterialCardView>
 
 
-                <!-- MONEY SAVED -->
+                <!-- TOTAL ITEMS -->
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
-                    android:layout_height="125dp"
+                    android:layout_height="132dp"
+
                     android:layout_weight="1"
                     android:layout_marginStart="6dp"
+
+                    app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="20dp"
-                    app:cardElevation="1dp"
-                    app:cardBackgroundColor="#FFFFFF">
+                    app:cardElevation="1dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+
                         android:orientation="vertical"
-                        android:padding="14dp">
+
+                        android:padding="15dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="₹"
-                            android:textColor="#D28A35"
-                            android:textSize="22sp"
-                            android:textStyle="bold" />
+
+                            android:text="📦 Total Items"
+
+                            android:paddingBottom="19dp"
+
+                            android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/textMoneySaved"
+                            android:id="@+id/textTotalItems"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:text="₹0"
+
+                            android:layout_marginTop="2dp"
+
+                            android:text="0"
+
                             android:textColor="#2B2118"
                             android:textSize="23sp"
                             android:textStyle="bold" />
@@ -192,17 +266,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Money Saved"
-                            android:textColor="#555555"
-                            android:textSize="13sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="This Week"
-                            android:textColor="#D28A35"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
+                            android:layout_marginTop="2dp"
+
+                            android:text="In your pantry"
+
+                            android:textColor="#777777"
+                            android:textSize="11sp" />
 
                     </LinearLayout>
 
@@ -216,38 +286,53 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:layout_marginTop="12dp"
+
                 android:orientation="horizontal">
 
-                <!-- ITEMS AVOIDED -->
+
+                <!-- AT RISK -->
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
-                    android:layout_height="125dp"
+                    android:layout_height="132dp"
+
                     android:layout_weight="1"
                     android:layout_marginEnd="6dp"
+
+                    app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="20dp"
-                    app:cardElevation="1dp"
-                    app:cardBackgroundColor="#FFFFFF">
+                    app:cardElevation="1dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+
                         android:orientation="vertical"
-                        android:padding="14dp">
+
+                        android:padding="15dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="🛒"
-                            android:textSize="21sp" />
+
+                            android:text="⚠️ At Risk"
+
+                            android:paddingBottom="10dp"
+
+                            android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/textItemsAvoided"
+                            android:id="@+id/textAtRiskItems"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
+
+                            android:layout_marginTop="2dp"
+
                             android:text="0"
+
                             android:textColor="#2B2118"
                             android:textSize="23sp"
                             android:textStyle="bold" />
@@ -255,51 +340,61 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Items Avoided"
-                            android:textColor="#555555"
-                            android:textSize="13sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="from Waste"
-                            android:textColor="#777777"
-                            android:textSize="11sp" />
+                            android:layout_marginTop="2dp"
+
+                            android:text="3 days or less"
+
+                            android:textColor="#D28A35"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
 
 
-                <!-- RECIPES COOKED -->
+                <!-- EXPIRING SOON -->
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
-                    android:layout_height="125dp"
+                    android:layout_height="132dp"
+
                     android:layout_weight="1"
                     android:layout_marginStart="6dp"
+
+                    app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="20dp"
-                    app:cardElevation="1dp"
-                    app:cardBackgroundColor="#FFFFFF">
+                    app:cardElevation="1dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+
                         android:orientation="vertical"
-                        android:padding="14dp">
+
+                        android:padding="15dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="🍳"
-                            android:textSize="21sp" />
+
+                            android:text="⏳ Expiring Soon"
+
+                            android:paddingBottom="10dp"
+
+                            android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/textRecipesCooked"
+                            android:id="@+id/textExpiringItems"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
+
+                            android:layout_marginTop="2dp"
+
                             android:text="0"
+
                             android:textColor="#2B2118"
                             android:textSize="23sp"
                             android:textStyle="bold" />
@@ -307,15 +402,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Recipes Cooked"
-                            android:textColor="#555555"
-                            android:textSize="13sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="This Week"
-                            android:textColor="#8C78B8"
+                            android:layout_marginTop="2dp"
+
+                            android:text="Within 7 days"
+
+                            android:textColor="#6E9E4A"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -325,30 +417,118 @@
 
             </LinearLayout>
 
+
+            <!-- ================= ROW 3 ================= -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+
+                android:layout_marginTop="12dp"
+
+                app:cardBackgroundColor="#EAF5E4"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center_vertical"
+
+                    android:orientation="horizontal"
+
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+
+                        android:gravity="center"
+
+                        android:text="🍳"
+                        android:textSize="24sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="12dp"
+
+                        android:layout_weight="1"
+
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="AI Recipe Ready"
+
+                            android:textColor="#2B2118"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginTop="3dp"
+
+                            android:text="Your current pantry can inspire a recipe."
+
+                            android:textColor="#6B665F"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textRecipeAvailable"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="0"
+
+                        android:textColor="#557A39"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
 
-        <!-- ============================================ -->
-        <!-- PANTRY HEALTH TREND                          -->
-        <!-- ============================================ -->
+
+        <!-- ================================================= -->
+        <!-- HEALTH TREND                                     -->
+        <!-- ================================================= -->
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="1dp"
-            app:cardBackgroundColor="#FFFFFF">
+            android:layout_height="310dp"
+
+            android:layout_marginTop="18dp"
+
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:orientation="vertical"
+
                 android:padding="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:text="🌿 Pantry Health Trend"
+
                     android:textColor="#222222"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -356,16 +536,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:layout_marginTop="3dp"
-                    android:text="Your pantry health over time"
+
+                    android:text="Your pantry health over the last 7 days"
+
                     android:textColor="#777777"
                     android:textSize="12sp" />
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/healthTrendChart"
+
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+
                     android:layout_marginTop="10dp"
+
                     android:layout_weight="1" />
 
             </LinearLayout>
@@ -373,45 +559,89 @@
         </com.google.android.material.card.MaterialCardView>
 
 
-        <!-- ============================================ -->
-        <!-- INVENTORY BY CATEGORY                         -->
-        <!-- ============================================ -->
+        <!-- ================================================= -->
+        <!-- CATEGORY CHART                                   -->
+        <!-- ================================================= -->
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="320dp"
-            android:layout_marginTop="14dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="1dp"
-            app:cardBackgroundColor="#FFFFFF">
+            android:layout_height="340dp"
+
+            android:layout_marginTop="16dp"
+
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:orientation="vertical"
+
                 android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <!-- CATEGORY HEADER -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="🥕 Inventory by Category"
-                    android:textColor="#222222"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
+
+                    android:gravity="center_vertical"
+
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+
+                        android:layout_weight="1"
+
+                        android:text="🥕 Inventory by Category"
+
+                        android:textColor="#222222"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/btnCategoryInfo"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="8dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_info"
+                        android:scaleType="centerInside"
+                        android:contentDescription="Category information"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                </LinearLayout>
+
+
+                <!-- CATEGORY SUBTITLE -->
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:layout_marginTop="3dp"
-                    android:text="Distribution of items in your pantry"
+
+                    android:text="How your pantry is distributed"
+
                     android:textColor="#777777"
                     android:textSize="12sp" />
 
+
+                <!-- PIE CHART -->
+
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/inventoryCategoryChart"
+
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="4dp"
+
+                    android:layout_marginTop="8dp"
+
                     android:layout_weight="1" />
 
             </LinearLayout>

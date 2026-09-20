@@ -11,7 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingStart="20dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="110dp">
 
         <!-- ================================================= -->
         <!--                 GREETING SECTION                  -->
@@ -821,75 +824,83 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-    <!-- ================================================= -->
-    <!--              WEEKLY COMEBACK                     -->
-    <!-- ================================================= -->
+        <!-- ================================================= -->
+        <!--              WEEKLY COMEBACK                     -->
+        <!-- ================================================= -->
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardWeeklyComeback"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="1dp"
-        app:cardBackgroundColor="#EAF5E4"
-        app:strokeWidth="0dp">
-
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardWeeklyComeback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="20dp">
-
-            <!-- LEFT CONTENT -->
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="#EAF5E4"
+            app:strokeWidth="0dp">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🌱 Weekly Comeback"
+                        android:textColor="#557A39"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/textWeeklyMission"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Mission: Use 2 items before they expire"
+                        android:textColor="#333333"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/textWeeklyProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Progress: 0 / 2"
+                        android:textColor="#6E9E4A"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/textWeeklyReward"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Reward: Kitchen Champion 🏆"
+                        android:textColor="#557A39"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🌱 Weekly Comeback"
-                    android:textColor="#557A39"
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Keep your pantry fresh and stay on top of what you have."
-                    android:textColor="#333333"
-                    android:textSize="14sp"
-                    android:lineSpacingExtra="2dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="A little pantry care goes a long way ✨"
-                    android:textColor="#6E9E4A"
-                    android:textSize="12sp"
-                    android:textStyle="bold"/>
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_marginStart="12dp"
+                    android:gravity="center"
+                    android:text="🥬"
+                    android:textSize="42sp"/>
 
             </LinearLayout>
 
-            <!-- RIGHT DECORATION -->
-
-            <TextView
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:layout_marginStart="12dp"
-                android:gravity="center"
-                android:text="🥬"
-                android:textSize="42sp"/>
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </ScrollView>

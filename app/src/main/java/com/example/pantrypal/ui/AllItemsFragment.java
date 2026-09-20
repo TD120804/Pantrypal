@@ -40,12 +40,23 @@ public class AllItemsFragment extends Fragment {
     private TextView healthScore;
     private TextView healthStatus;
     private TextView healthMessage;
+    private TextView totalItems;
     private com.mikhaellopez.circularprogressbar.CircularProgressBar healthCircle;
     private TextView recipeName;
     private TextView cookTime;
     private TextView difficulty;
     private TextView servings;
     private TextView ingredientAvailability;
+    private TextView textWeeklyMission;
+    private TextView textWeeklyProgress;
+    private TextView textWeeklyReward;
+
+    private MaterialCardView cardWeeklyComeback;
+
+    private static final int WEEKLY_TARGET = 2;
+    private static final String WEEKLY_PREFS = "weekly_comeback";
+    private static final String KEY_WEEK = "week";
+    private static final String KEY_PROGRESS = "progress";
 
     private MaterialCardView cardAdd;
     private MaterialCardView cardScan;
@@ -75,6 +86,7 @@ public class AllItemsFragment extends Fragment {
         recipesText = view.findViewById(R.id.textRecipes);
         buyText = view.findViewById(R.id.textBuy);
         atRiskText = view.findViewById(R.id.textSaved);
+        totalItems = view.findViewById(R.id.text_total_items);
         healthScore = view.findViewById(R.id.text_health_score);
         healthCircle = view.findViewById(R.id.healthCircle);
         healthStatus = view.findViewById(R.id.text_health_status);
@@ -84,6 +96,11 @@ public class AllItemsFragment extends Fragment {
         difficulty = view.findViewById(R.id.textDifficulty);
         servings = view.findViewById(R.id.textServings);
         ingredientAvailability = view.findViewById(R.id.textIngredientAvailability);
+        textWeeklyMission = view.findViewById(R.id.textWeeklyMission);
+        textWeeklyProgress = view.findViewById(R.id.textWeeklyProgress);
+        textWeeklyReward = view.findViewById(R.id.textWeeklyReward);
+
+        cardWeeklyComeback = view.findViewById(R.id.cardWeeklyComeback);
 
         cardAdd = view.findViewById(R.id.cardAdd);
         cardScan = view.findViewById(R.id.cardScan);
@@ -112,6 +129,7 @@ public class AllItemsFragment extends Fragment {
         btnCookNow.setOnClickListener(v -> openCurrentRecipe());
 
         cardGrocery.setOnClickListener(v -> showShoppingList());
+        cardWeeklyComeback.setOnClickListener(v -> showWeeklyComebackDialog());
 
         viewModel = new ViewModelProvider(requireActivity()).get(GroceryViewModel.class);
         viewModel.getAllItems().observe(getViewLifecycleOwner(), this::updateDashboard);
@@ -136,6 +154,7 @@ public class AllItemsFragment extends Fragment {
         if (items == null) return;
 
         int total = items.size();
+        totalItems.setText(String.valueOf(total));
         int expiring = 0;
         int lowStock = 0;
         int atRisk = 0;
@@ -167,6 +186,7 @@ public class AllItemsFragment extends Fragment {
         healthCircle.setProgress(score);
         healthStatus.setText(getHealthStatus(score));
         healthMessage.setText(getHealthMessage(score, expiring));
+        updateWeeklyComeback();
         if (total == 0) {
             greetingSubtitle.setText("Your kitchen is ready for its first ingredients.");
             recipeName.setText("Add ingredients to get an AI recipe");
@@ -400,5 +420,180 @@ public class AllItemsFragment extends Fragment {
                             .commit();
                 })
                 .show();
+    }
+
+    private void updateWeeklyComeback() {
+        android.content.SharedPreferences prefs =
+                requireContext().getSharedPreferences(WEEKLY_PREFS, android.content.Context.MODE_PRIVATE);
+
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+
+        int year = calendar.get(java.util.Calendar.YEAR);
+        int week = calendar.get(java.util.Calendar.WEEK_OF_YEAR);
+
+        String currentWeek = year + "-" + week;
+
+        String savedWeek = prefs.getString(KEY_WEEK, "");
+
+        if (!currentWeek.equals(savedWeek)) {
+            prefs.edit()
+                    .putString(KEY_WEEK, currentWeek)
+                    .putInt(KEY_PROGRESS, 0)
+                    .apply();
+        }
+
+        int progress = prefs.getInt(KEY_PROGRESS, 0);
+        progress = Math.min(progress, WEEKLY_TARGET);
+
+        textWeeklyMission.setText("Mission: Use 2 items before they expire");
+        textWeeklyProgress.setText("Progress: " + progress + " / " + WEEKLY_TARGET);
+        textWeeklyReward.setText("Reward: Kitchen Champion 🏆");
+
+        if (progress >= WEEKLY_TARGET) {
+            textWeeklyProgress.setText("Progress: 2 / 2 ✓");
+            textWeeklyReward.setText("Reward: Kitchen Champion 🏆 🎉");
+        }
+    }
+    private List<GroceryItem> getWeeklyEligibleItems() {
+        List<GroceryItem> allItems = viewModel.getAllItems().getValue();
+        List<GroceryItem> eligibleItems = new ArrayList<>();
+
+        if (allItems == null) {
+            return eligibleItems;
+        }
+
+        for (GroceryItem item : allItems) {
+            int daysLeft = RiskCalculator.getDaysLeft(item.getExpiryDate());
+
+            // Item must still be usable and expire within 7 days.
+            if (daysLeft >= 0 && daysLeft <= 7 && item.getQuantity() > 0) {
+                eligibleItems.add(item);
+            }
+        }
+
+        return eligibleItems;
+    }
+    private void showWeeklyComebackDialog() {
+
+        android.content.SharedPreferences prefs =
+                requireContext().getSharedPreferences(
+                        WEEKLY_PREFS,
+                        android.content.Context.MODE_PRIVATE
+                );
+
+        int progress = prefs.getInt(KEY_PROGRESS, 0);
+
+        if (progress >= WEEKLY_TARGET) {
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Weekly Comeback 🎉")
+                    .setMessage(
+                            "Mission complete!\n\n" +
+                                    "You used 2 items before they expired.\n\n" +
+                                    "Reward: Kitchen Champion 🏆"
+                    )
+                    .setPositiveButton("Nice!", null)
+                    .show();
+
+            return;
+        }
+
+
+        List<GroceryItem> eligibleItems = getWeeklyEligibleItems();
+
+        if (eligibleItems.isEmpty()) {
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Weekly Comeback 🌱")
+                    .setMessage(
+                            "No items are currently expiring within 7 days.\n\n" +
+                                    "Add or keep an eye on expiring pantry items to complete this week's mission."
+                    )
+                    .setPositiveButton("Got it", null)
+                    .show();
+
+            return;
+        }
+
+        String[] itemNames = new String[eligibleItems.size()];
+
+        for (int i = 0; i < eligibleItems.size(); i++) {
+            GroceryItem item = eligibleItems.get(i);
+
+            itemNames[i] =
+                    item.getName()
+                            + "  •  Qty " + item.getQuantity()
+                            + "  •  " + RiskCalculator.getDaysLeft(item.getExpiryDate())
+                            + " day(s) left";
+        }
+
+        final int[] selectedIndex = {0};
+
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("What did you use? 🌱")
+                .setSingleChoiceItems(
+                        itemNames,
+                        0,
+                        (dialog, which) -> selectedIndex[0] = which
+                )
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Use 1", (dialog, which) -> {
+
+                    GroceryItem selectedItem =
+                            eligibleItems.get(selectedIndex[0]);
+
+                    useOneItemForWeeklyMission(selectedItem);
+                })
+                .show();
+    }
+    private void incrementWeeklyProgress() {
+
+        android.content.SharedPreferences prefs =
+                requireContext().getSharedPreferences(
+                        WEEKLY_PREFS,
+                        android.content.Context.MODE_PRIVATE
+                );
+
+        int progress = prefs.getInt(KEY_PROGRESS, 0);
+
+        if (progress < WEEKLY_TARGET) {
+            progress++;
+        }
+
+        prefs.edit()
+                .putInt(KEY_PROGRESS, progress)
+                .apply();
+
+        updateWeeklyComeback();
+
+        if (progress >= WEEKLY_TARGET) {
+
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Mission Complete! 🎉")
+                    .setMessage(
+                            "You used 2 items before they expired.\n\n" +
+                                    "You've earned the Kitchen Champion reward! 🏆"
+                    )
+                    .setPositiveButton("Awesome!", null)
+                    .show();
+        }
+    }
+    private void useOneItemForWeeklyMission(GroceryItem item) {
+
+        int currentQuantity = item.getQuantity();
+
+        if (currentQuantity <= 0) {
+            return;
+        }
+
+        if (currentQuantity == 1) {
+            // If only 1 is left, remove the item
+            viewModel.delete(item);
+        } else {
+            // Otherwise reduce quantity by 1
+            item.setQuantity(currentQuantity - 1);
+            viewModel.update(item);
+        }
+
+        // Increase weekly mission progress
+        incrementWeeklyProgress();
     }
 }
